@@ -10,6 +10,8 @@ import string
 
 def make_blank_board(rows, cols):
     board = []
+
+    # Fill blank board with *
     for _ in range(rows):
         row = []
         for _ in range(cols):
@@ -20,7 +22,7 @@ def make_blank_board(rows, cols):
 
 def print_board(board, words):
     header = "–––"
-    for x in range(cols):
+    for _ in range(cols):
         header += "––"
     print(header)
     
@@ -42,6 +44,7 @@ def fill_blanks(board):
                 board[r][c] = random.choice(string.ascii_uppercase)
 
 def place_word(board, word):
+    # Determine if word should be forward or backward
     orientation = round(random.random())
     if orientation == 0:
         flipped = ''
@@ -49,6 +52,7 @@ def place_word(board, word):
             flipped = letter + flipped
         word = flipped
     
+    # Place word in a random way
     placement_type = random.randint(0,3)
     if placement_type == 0:
         place_horiz(board, word)
@@ -63,6 +67,7 @@ def place_horiz(board, word):
     row = int(random.random() * rows)
     col = int(random.random() * (cols - len(word) + 1))
     
+    # Make sure the word fits
     failed = False
     for letter in word:
         if board[row][col] == '*' or board[row][col] == letter:
@@ -70,11 +75,13 @@ def place_horiz(board, word):
         else:
             failed = True
             
+    # Place the word
     if failed == False:
         col -= len(word)
         for letter in word:
             board[row][col] = letter
             col += 1
+    # Try to place somewhere else
     else:
         place_word(board, word)
         
@@ -82,6 +89,7 @@ def place_vert(board, word):
     row = int(random.random() * (rows - len(word) + 1))
     col = int(random.random() * (cols))
     
+    # Make sure the word fits
     failed = False
     for letter in word:
         if board[row][col] == '*' or board[row][col] == letter:
@@ -89,11 +97,13 @@ def place_vert(board, word):
         else:
             failed = True
             
+    # Place the word
     if failed == False:
         row -= len(word)
         for letter in word:
             board[row][col] = letter
             row += 1
+    # Try to place somewhere else
     else:
         place_word(board, word)    
             
@@ -103,6 +113,7 @@ def place_diag_forw(board, word):
     row = int((random.random() * (rows - len(word) + 1)) + len(word) -1)
     col = int(random.random() * (cols - len(word) + 1))
     
+    # Make sure the word fits
     failed = False
     for letter in word:
         if board[row][col] == '*' or board[row][col] == letter:
@@ -111,6 +122,7 @@ def place_diag_forw(board, word):
         else:
             failed = True
             
+    # Place the word
     if failed == False:
         col -= len(word)
         row += len(word)
@@ -118,6 +130,7 @@ def place_diag_forw(board, word):
             board[row][col] = letter
             col += 1
             row -= 1
+    # Try to place somewhere else
     else:
         place_word(board, word)
     
@@ -125,6 +138,7 @@ def place_diag_backw(board, word):
     row = int(random.random() * (rows - len(word) + 1))
     col = int(random.random() * (cols - len(word) + 1))
     
+    # Make sure the word fits
     failed = False
     for letter in word:
         if board[row][col] == '*' or board[row][col] == letter:
@@ -133,6 +147,7 @@ def place_diag_backw(board, word):
         else:
             failed = True
             
+    # Place the word
     if failed == False:
         col -= len(word)
         row -= len(word)
@@ -140,8 +155,10 @@ def place_diag_backw(board, word):
             board[row][col] = letter
             col += 1
             row += 1
+    # Try to place somewhere else
     else:
         place_word(board, word)
+            
             
 #=========================================================================
 # Start of Program

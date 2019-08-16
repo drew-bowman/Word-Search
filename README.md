@@ -44,3 +44,6 @@ Repo
 Push
 Hidden
 ```
+
+### Solution
+![](Solved.png)
